@@ -27,7 +27,7 @@ def mad(arr):
 
 if __name__ == "__main__":
 	df = pd.read_csv('./customers.csv')
-	print df.columns
+	print (df.columns)
 	sns_plot = sns.lmplot(df.columns[0], df.columns[1], data=df, fit_reg=False)
 
 	sns_plot.axes[0,0].set_ylim(0,)
