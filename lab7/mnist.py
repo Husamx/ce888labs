@@ -10,15 +10,15 @@ import numpy as np
 np.random.seed(1337)  # for reproducibility
 
 from keras.datasets import mnist
-from keras.layers import Input, Dense, Activation, Dropout
+from keras.layers import Input, Dense, Activation, Dropout,PReLU
 
 from keras.models import Model
 from keras.utils import np_utils
 
-
 batch_size = 128
 nb_classes = 10
 nb_epoch = 20
+n_hidden_layers = 3
 
 # the data, shuffled and split between train and test sets
 (X_train, y_train), (X_test, y_test) = mnist.load_data()
@@ -38,8 +38,10 @@ Y_test = np_utils.to_categorical(y_test, nb_classes)
 
 inputs = Input(shape=(784,))
 x = inputs
-
-
+for n in range(n_hidden_layers):
+	x = Dense(64)(x)
+	x = PReLU()(x)
+x = Dropout(0.5)(x)
 predictions = Dense(nb_classes, activation='softmax')(x)
     
 model = Model(input=inputs, output=predictions)
